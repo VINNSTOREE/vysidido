@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>VINN DEPOSIT PPOB</title>
+</head>
+<body>
+  <h1>Deposit</h1>
+  <input id="nominal" type="number" placeholder="Masukkan nominal" />
+  <button onclick="buatDeposit()">Buat Deposit</button>
+  <div id="hasilDeposit"></div>
+
+  <h1>PPOB Ewallet</h1>
+  <input id="nomor" placeholder="Nomor HP" />
+  <input id="provider" placeholder="Provider (ex: DANA)" />
+  <input id="jumlah" type="number" placeholder="Jumlah" />
+  <button onclick="buyEwallet()">Beli</button>
+  <pre id="respppob"></pre>
+
+  <script>
+    async function buatDeposit() {
+      const nominal = document.getElementById('nominal').value;
+      const res = await fetch('/api/deposit', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nominal })
+      });
+      const data = await res.json();
+      document.getElementById('hasilDeposit').innerHTML = `
+        <p>ID: ${data.reff_id}</p>
+        <p>Status: ${data.status}</p>
+        <img src="${data.qr_image}" width="200" />
+      `;
+    }
+
+    async function buyEwallet() {
+      const nomor = document.getElementById('nomor').value;
+      const provider = document.getElementById('provider').value;
+      const nominal = document.getElementById('jumlah').value;
+      const res = await fetch('/api/ppob/ewallet', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nomor, provider, nominal })
+      });
+      const data = await res.json();
+      document.getElementById('respppob').innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>

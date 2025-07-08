@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>API Dokumentasi – Vinn Deposit</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      padding: 40px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    code, pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 6px;
+      display: block;
+      white-space: pre-wrap;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📘 Dokumentasi API – Vinn QRIS Deposit</h1>
+
+  <section>
+    <h2>🔹 POST /api/deposit</h2>
+    <p>Digunakan untuk membuat QRIS deposit baru.</p>
+    <h4>Request:</h4>
+    <pre>
+POST /api/deposit
+Content-Type: application/json
+
+{
+  "nominal": 50000
+}
+    </pre>
+    <h4>Response:</h4>
+    <pre>
+{
+  "reff_id": "DEP1720512345678",
+  "nominal": 50000,
+  "status": "Pending",
+  "expired": "2025-07-08T11:42:00.000Z",
+  "qr_string": "00020101...",
+  "qr_image": "data:image/png;base64,..."
+}
+    </pre>
+  </section>
+
+  <section>
+    <h2>🔹 POST /api/status</h2>
+    <p>Digunakan untuk mengecek status deposit berdasarkan <code>reff_id</code>.</p>
+    <h4>Request:</h4>
+    <pre>
+POST /api/status
+Content-Type: application/json
+
+{
+  "reff_id": "DEP1720512345678"
+}
+    </pre>
+    <h4>Response (berhasil):</h4>
+    <pre>
+{
+  "reff_id": "DEP1720512345678",
+  "nominal": 50000,
+  "status": "Success",
+  "expired": "2025-07-08T11:42:00.000Z",
+  "qr_string": "00020101..."
+}
+    </pre>
+    <h4>Response (gagal):</h4>
+    <pre>
+{
+  "error": "Transaksi tidak ditemukan"
+}
+    </pre>
+  </section>
+</body>
+</html>

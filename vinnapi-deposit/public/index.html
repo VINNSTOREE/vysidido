@@ -1,50 +1,58 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <title>VINN DEPOSIT PPOB</title>
-</head>
-<body>
-  <h1>Deposit</h1>
-  <input id="nominal" type="number" placeholder="Masukkan nominal" />
-  <button onclick="buatDeposit()">Buat Deposit</button>
-  <div id="hasilDeposit"></div>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
 
-  <h1>PPOB Ewallet</h1>
-  <input id="nomor" placeholder="Nomor HP" />
-  <input id="provider" placeholder="Provider (ex: DANA)" />
-  <input id="jumlah" type="number" placeholder="Jumlah" />
-  <button onclick="buyEwallet()">Beli</button>
-  <pre id="respppob"></pre>
+h1 {
+  color: #ffdd57;
+  margin-top: 20px;
+}
 
-  <script>
-    async function buatDeposit() {
-      const nominal = document.getElementById('nominal').value;
-      const res = await fetch('/api/deposit', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nominal })
-      });
-      const data = await res.json();
-      document.getElementById('hasilDeposit').innerHTML = `
-        <p>ID: ${data.reff_id}</p>
-        <p>Status: ${data.status}</p>
-        <img src="${data.qr_image}" width="200" />
-      `;
-    }
+.container {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 30px;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
 
-    async function buyEwallet() {
-      const nomor = document.getElementById('nomor').value;
-      const provider = document.getElementById('provider').value;
-      const nominal = document.getElementById('jumlah').value;
-      const res = await fetch('/api/ppob/ewallet', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nomor, provider, nominal })
-      });
-      const data = await res.json();
-      document.getElementById('respppob').innerText = JSON.stringify(data, null, 2);
-    }
-  </script>
-</body>
-</html>
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+input {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+button {
+  background-color: #ffdd57;
+  color: #222;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #ffc107;
+}
+
+pre {
+  background: rgba(0,0,0,0.4);
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+}

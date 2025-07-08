@@ -14,4 +14,4 @@ const ppobRoutes = require('./routes/ppob');
 app.use('/api', depositRoutes);
 app.use('/api', ppobRoutes);
 
-app.listen(3000, () => console.log('Running at http://localhost:3000'));
+app.listen(3000, () => console.log('Running at http://projectsdinamis.vinnn.tech:3000'));
